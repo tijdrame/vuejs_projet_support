@@ -15,6 +15,7 @@
         {{ emailAddress }}
       </li>
     </ul>
+    <button @click="$emit('delete', id)">Delete</button>
   </li>
 </template>
 
@@ -41,8 +42,8 @@ export default {
       },*/
     },
   },
-  //emits: ["toggle-favorite"],
-  emits: {
+  emits: ["toggle-favorite", "delete"],
+  /*emits: {
     "toggle-favorite": function (id) {
       if (id) return true;
       else {
@@ -50,7 +51,7 @@ export default {
         return false;
       }
     },
-  },
+  }*/
   data() {
     return {
       detailsAreVisible: false,
@@ -64,6 +65,10 @@ export default {
       //this.frienIsfavorite = !this.frienIsfavorite;
       this.$emit("toggle-favorite", this.id);
     },
+    /*deleteFriend() {
+      //le faire directement sur le html
+      this.$emits('delete')
+    },*/
   },
 };
 </script>
