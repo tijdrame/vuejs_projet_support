@@ -43,7 +43,16 @@ export default {
       this.activeTopic = this.topics.find((topic) => topic.id === topicId);
     },
   },
-  mounted() {},
+  mounted() {
+    setTimeout(() => {
+      this.topics.push({
+        id: 'events',
+        title: 'Events',
+        description: 'Event are important for view',
+        fullText: 'Events allow you to trigger code on demand!',
+      });
+    }, 3000);
+  },
 };
 </script>
 
