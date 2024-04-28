@@ -1,0 +1,44 @@
+<template>
+  <div>
+    <the-header></the-header>
+    <BadgeList />
+    <User-info
+      :full-name="activeUser.name"
+      :info-text="activeUser.description"
+      :role="activeUser.role"
+    ></User-info>
+  </div>
+</template>
+
+<script>
+import TheHeader from "./components/TheHeader.vue";
+import BadgeList from "./components/BadgeList.vue";
+import UserInfo from "./components/UserInfo.vue";
+
+export default {
+  components: {
+    "the-header": TheHeader,
+    BadgeList,
+    UserInfo,
+  },
+  data() {
+    return {
+      activeUser: {
+        name: "Maximilian Schwarzmüller",
+        description: "Site owner and admin",
+        role: "admin",
+      },
+    };
+  },
+};
+</script>
+
+<style>
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+}
+</style>
