@@ -41,6 +41,7 @@
         <p v-if="invalidInput">
           One or more input fields are invalid. Please check your provided data.
         </p>
+        <p v-if="myError">{{ myError }}</p>
         <div>
           <base-button>Submit</base-button>
         </div>
@@ -56,6 +57,7 @@ export default {
       enteredName: '',
       chosenRating: null,
       invalidInput: false,
+      myError: null,
     };
   },
   //emits: ['survey-submit'],
@@ -71,7 +73,7 @@ export default {
         userName: this.enteredName,
         rating: this.chosenRating,
       });*/
-
+      this.myError = null;
       fetch('https://blog-dafe6.firebaseio.com/surveys.json', {
         method: 'POST',
         headers: {
@@ -81,7 +83,18 @@ export default {
           name: this.enteredName,
           rating: this.chosenRating,
         }),
-      });
+      })
+        .then((response) => {
+          if (response.ok) {
+            //...
+          } else {
+            throw new Error('Could not save data!');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.myError = error.message;
+        });
       this.enteredName = '';
       this.chosenRating = null;
     },
