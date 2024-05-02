@@ -31,6 +31,15 @@ const router = createRouter({
     { path: '/:notFound(.*)', component: NotFound },
   ],
   linkActiveClass: 'active',
+  scrollBehavior(to, from, savedPosition) {
+    console.log(to, from, savedPosition);
+    //retourner là ou on etait en cliquant sur retour
+    if (savedPosition) {
+      return savedPosition;
+    }
+    //toujours en haut de la page aprés click
+    return { left: 0, top: 0 };
+  },
 });
 const app = createApp(App);
 app.use(router);
