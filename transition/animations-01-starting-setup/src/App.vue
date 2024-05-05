@@ -4,7 +4,15 @@
     <button @click="animateBlock">Animate</button>
   </div>
   <div class="container">
-    <transition>
+    <transition
+      name="para"
+      @before-enter="beforeEnter"
+      @before-leave="beforeLeave"
+      @enter="enter"
+      @after-enter="afterEnter"
+      @leave="leave"
+      @after-leave="afterLeave"
+    >
       <p v-if="paraIsVisible">this is only sometimes visibe ...</p>
     </transition>
     <button @click="toggeParagraph">Toggle Paragraph</button>
@@ -36,6 +44,32 @@ export default {
     };
   },
   methods: {
+    beforeLeave(el) {
+      //ici on peut changer le style de l'element
+      console.log('beforeLeave');
+      console.log(el);
+    },
+    enter(el) {
+      //ici on peut changer le style de l'element
+      console.log('enter');
+      console.log(el);
+    },
+    beforeEnter(el) {
+      console.log('beforeEnter');
+      console.log(el);
+    },
+    afterEnter(el) {
+      console.log('afterEnter');
+      console.log(el);
+    },
+    leave(el) {
+      console.log('leave');
+      console.log(el);
+    },
+    afterLeave(el) {
+      console.log('afterLeave');
+      console.log(el);
+    },
     showUsers() {
       this.usersArevisible = true;
     },
@@ -108,6 +142,10 @@ button:active {
   /*opacity: 0;
   transform: translateY(-30px);*/
 }
+.para-enter-active {
+  /*animation: slide-scale 0.3s ease-out forwards;*/
+  animation: slide-scale 2s ease-out;
+}
 .v-enter-active {
   /*transition: all 0.3s ease-out;*/
   animation: slide-scale 0.3s ease-out;
@@ -144,7 +182,7 @@ button:active {
 }
 @keyframes slide-scale {
   0% {
-    transform: translateX(0) scale(1);
+    transform: translateX(0) scale(0);
   }
   70% {
     transform: translateX(-120) scale(1.1);
