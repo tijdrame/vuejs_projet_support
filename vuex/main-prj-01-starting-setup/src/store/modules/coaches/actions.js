@@ -27,7 +27,7 @@ export default {
       return;
     }
     const response = await fetch(
-      `https://blog-dafe6.firebaseio.com/coaches.jso`
+      `https://blog-dafe6.firebaseio.com/coaches.json`
     );
     const responseData = await response.json();
     if (!response.ok) {
