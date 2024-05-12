@@ -24,7 +24,6 @@ export default {
   },
   async loadCoaches(context, payload) {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {
-      console.log('dont update');
       return;
     }
     const response = await fetch(

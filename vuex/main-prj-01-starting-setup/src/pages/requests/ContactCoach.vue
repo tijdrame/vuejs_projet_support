@@ -37,7 +37,6 @@ export default {
         this.formIsValid = false;
         return;
       }
-      console.log('formValid');
       this.$store.dispatch('requests/contactCoach', {
         email: this.email,
         message: this.message,
