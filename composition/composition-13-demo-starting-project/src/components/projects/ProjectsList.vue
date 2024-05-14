@@ -1,9 +1,17 @@
 <template>
   <base-container v-if="user">
     <h2>{{ user.fullName }}: Projects</h2>
-    <base-search v-if="hasProjects" @search="updateSearch" :search-term="enteredSearchTerm"></base-search>
+    <base-search
+      v-if="hasProjects"
+      @search="updateSearch"
+      :search-term="enteredSearchTerm"
+    ></base-search>
     <ul v-if="hasProjects">
-      <project-item v-for="prj in availableProjects" :key="prj.id" :title="prj.title"></project-item>
+      <project-item
+        v-for="prj in availableProjects"
+        :key="prj.id"
+        :title="prj.title"
+      ></project-item>
     </ul>
     <h3 v-else>No projects found.</h3>
   </base-container>
@@ -13,6 +21,7 @@
 </template>
 
 <script>
+import { ref, computed, watch } from 'vue';
 import ProjectItem from './ProjectItem.vue';
 
 export default {
@@ -20,13 +29,47 @@ export default {
     ProjectItem,
   },
   props: ['user'],
-  data() {
+  setup(props) {
+    const enteredSearchTerm = ref('');
+    const activeSearchTerm = ref('');
+    const availableProjects = computed(() => {
+      if (activeSearchTerm.value) {
+        return props.user.projects.filter((prj) =>
+          prj.title.includes(activeSearchTerm.value)
+        );
+      }
+      return props.user.projects;
+    });
+    const hasProjects = computed(() => {
+      return props.user.projects && availableProjects.value.length > 0;
+    });
+    watch(enteredSearchTerm, (newValue) => {
+      setTimeout(() => {
+        if (newValue === enteredSearchTerm.value) {
+          activeSearchTerm.value = newValue;
+        }
+      }, 300);
+    });
+    watch(props, () => {
+      this.enteredSearchTerm = '';
+    });
+    function updateSearch(val) {
+      enteredSearchTerm.value = val;
+    }
+    return {
+      enteredSearchTerm,
+      activeSearchTerm,
+      updateSearch,
+      hasProjects,
+    };
+  },
+  /*data() {
     return {
       enteredSearchTerm: '',
       activeSearchTerm: '',
     };
-  },
-  computed: {
+  },*/
+  /*computed: {
     hasProjects() {
       return this.user.projects && this.availableProjects.length > 0;
     },
@@ -38,13 +81,13 @@ export default {
       }
       return this.user.projects;
     },
-  },
-  methods: {
+  },*/
+  /*methods: {
     updateSearch(val) {
       this.enteredSearchTerm = val;
     },
-  },
-  watch: {
+  },*/
+  /*watch: {
     enteredSearchTerm(val) {
       setTimeout(() => {
         if (val === this.enteredSearchTerm) {
@@ -55,7 +98,7 @@ export default {
     user() {
       this.enteredSearchTerm = '';
     },
-  },
+  },*/
 };
 </script>
 
